@@ -1,0 +1,14 @@
+# Ignore build output and IDE configs
+.settings/
+bin/
+target/
+.classpath
+.project
+
+# Ignore all files by default
+*
+
+# But keep these specific files and folders
+!src/
+!src/**
+!pom.xml
