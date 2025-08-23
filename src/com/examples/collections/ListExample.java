@@ -8,7 +8,7 @@ public class ListExample {
 		ArrayList<String> arrayListObj = new ArrayList<String>();
 		
 		arrayListObj.add("Abi");
-		arrayListObj.add("Yamuna");
+		arrayListObj.add("Nobody");
 		
 		for (String arrListValue : arrayListObj) {
 			System.out.println(arrListValue);

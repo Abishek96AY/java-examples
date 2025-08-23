@@ -5,8 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ScheduledExecutorServiceEx1 {
-	void callService()
-	{
+	void callService() {
 		// Create a scheduled executor service with 10 threads
 		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
 
@@ -22,7 +21,7 @@ public class ScheduledExecutorServiceEx1 {
 
 		// Schedule the task to run every second
 		scheduledExecutorService.scheduleAtFixedRate(task, 0, 1, TimeUnit.MILLISECONDS);
-		
+
 		// Schedule a task to shutdown the executor service after 10 minutes
 		scheduledExecutorService.schedule(() -> {
 			scheduledExecutorService.shutdown();

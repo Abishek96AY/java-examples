@@ -1,20 +1,9 @@
 package com.examples.array;
 
-import java.util.Scanner;
-
 public class ArrayReverser {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the size of the array:");
-        int size = scanner.nextInt();
-
-        int[] array = new int[size];
-        System.out.println("Enter " + size + " elements:");
-        for (int i = 0; i < size; i++) {
-            array[i] = scanner.nextInt();
-        }
-
+        int[] array = {10, 20, 30, 40, 50, 70, 90, 88};
         reverseArray(array);
         System.out.println("Reversed array:");
         for (int num : array) {
@@ -27,6 +16,7 @@ public class ArrayReverser {
         int endIndex = array.length - 1;
 
         while (startIndex < endIndex) {
+        	System.out.println("startIndex :: "+startIndex +", endIndex :: "+endIndex);
             // Swap the values
             int temp = array[startIndex];
             array[startIndex] = array[endIndex];

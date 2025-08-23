@@ -1,26 +1,18 @@
 package com.examples.test;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-class Automation
-{
-	public void run()
-	{
-		System.out.println("Executes All Api's !!!");
-	}
-}
+import java.util.HashMap;
+import java.util.Map;
 
 public class Test {
 	public static void main(String[] args) {
-		ExecutorService obj = Executors.newFixedThreadPool(10);
-		Automation automationObj = new Automation();
-		obj.submit(() ->
-		{
-			for (int i = 0; i < 50; i++) {
-				automationObj.run();
-			}
-		});
-		obj.shutdown();
+		String str = "programmming";
+
+		Map<Character, Integer> map = new HashMap<>();
+
+		for (Character c : str.toCharArray()) {
+			map.put(c, map.getOrDefault(c, 0) + 1);
+		}
+
+		System.out.println(""+map.toString());
 	}
 }

@@ -80,7 +80,7 @@ class BankAccount2 {
 	}
 }
 
-public class ReentrantLockExWithRetry {
+public class ReentrantLockBankWithRetryEx {
 	public static void main(String[] args) {
 		BankAccount2 account = new BankAccount2();
 		ExecutorService executor = Executors.newFixedThreadPool(3); // 3 bank counters

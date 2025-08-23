@@ -1,9 +1,7 @@
 package com.examples.string;
 
-public class StringContainsNumeric
-{
-	static boolean method1()
-	{
+public class StringContainsNumeric {
+	static boolean method1() {
 		String a = "123";
 		try {
 			Integer.parseInt(a);
@@ -13,8 +11,7 @@ public class StringContainsNumeric
 		}
 	}
 
-	static boolean method2()
-	{
+	static boolean method2() {
 		CharSequence cs = "+123";
 		final int sz = cs.length();
 		for (int i = 0; i < sz; i++) {
@@ -24,8 +21,8 @@ public class StringContainsNumeric
 		}
 		return true;
 	}
-	public static void main(String[] args)
-	{
+
+	public static void main(String[] args) {
 		System.out.println(method1() ? "String contains !!!" : "All Integers !!");
 	}
 }

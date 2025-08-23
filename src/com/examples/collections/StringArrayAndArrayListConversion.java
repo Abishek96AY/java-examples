@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ArrayAndArrayListConversion {
+public class StringArrayAndArrayListConversion {
     public static void main(String[] args) {
         // Step 1: Convert an array to an ArrayList
         String[] array = {"Java", "Python", "C++"};
@@ -12,7 +12,7 @@ public class ArrayAndArrayListConversion {
         System.out.println("Array to ArrayList: " + arrayList);
 
         // Step 2: Convert an ArrayList to an array
-        ArrayList<String> listOfLanguages = new ArrayList<>();
+        List<String> listOfLanguages = new ArrayList<>();
         listOfLanguages.add("JavaScript");
         listOfLanguages.add("TypeScript");
         listOfLanguages.add("Kotlin");

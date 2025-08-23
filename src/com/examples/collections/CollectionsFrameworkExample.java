@@ -83,7 +83,7 @@ public class CollectionsFrameworkExample {
 			treeMapObj.put("Nectarine", "Tart");
 			linkedHashMapObj.put("Orange", "Citrus");
 			hashtableObj.put("Apple", "Fruit");
-			
+
 			// Add All
 			arrayListObj.addAll(Arrays.asList("Apple", "Banana"));
 			linkedListObj.addAll(Arrays.asList("Cherry", "Date"));
@@ -173,7 +173,7 @@ public class CollectionsFrameworkExample {
 			hashMapObj.containsKey("Mango"); // Checks if key "Mango" exists
 			treeMapObj.containsValue("Tart"); // Checks if value "Tart" exists
 			linkedHashMapObj.containsKey("Orange");
-			 hashtableObj.containsKey("Apple");
+			hashtableObj.containsKey("Apple");
 		} catch (Exception e) {
 		}
 	}
@@ -246,13 +246,12 @@ public class CollectionsFrameworkExample {
 			hashMapObj.put("Mango", "Sour"); // Updates the value for key "Mango"
 			linkedHashMapObj.put("Orange", "Tart"); // Updates the value for key "Orange"
 			hashtableObj.put("Apple", "Green Fruit"); // Updates the value for key "Apple"
-			
-			//Update All
+
+			// Update All
 			hashtableObj.putAll(Map.of("Banana", "Yellow Fruit", "Cucumber", "Green Vegetable"));
 		} catch (Exception e) {
 		}
 	}
-
 
 	// 7. Sorting Operations
 	void sortElements() {
@@ -266,13 +265,12 @@ public class CollectionsFrameworkExample {
 		}
 	}
 
-
 	// 8. Conversion Operations
 	void convertCollection() {
 		try {
 			Set<String> listToSet = new HashSet<>(arrayListObj);
 			List<String> setToList = new ArrayList<>(hastSetObj);
-			
+
 			Set<String> keysSet = hashtableObj.keySet(); // Get all keys
 			Collection<String> values = hashtableObj.values(); // Get all values
 		} catch (Exception e) {
@@ -323,13 +321,9 @@ public class CollectionsFrameworkExample {
 	// 11. Transformation Operations (Streams)
 	void transformingWithStreams() {
 		try {
-			List<String> upperCaseList = arrayListObj.stream()
-					.map(String::toUpperCase)
-					.toList();
+			List<String> upperCaseList = arrayListObj.stream().map(String::toUpperCase).toList();
 
-			List<String> filteredList = linkedListObj.stream()
-					.filter(s -> s.startsWith("B"))
-					.toList();
+			List<String> filteredList = linkedListObj.stream().filter(s -> s.startsWith("B")).toList();
 		} catch (Exception e) {
 		}
 	}

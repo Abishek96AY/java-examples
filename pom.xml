@@ -2,8 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>JAVA_Examples</groupId>
-	<artifactId>JAVA_Examples</artifactId>
+	<groupId>com.java</groupId>
+	<artifactId>javaexamples</artifactId>
 	<version>1.0</version>
 
 	<dependencies>
@@ -12,13 +12,13 @@
 			<artifactId>guava</artifactId>
 			<version>33.4.8-jre</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.14.0</version>
 				<configuration>

@@ -1,16 +1,11 @@
 package com.examples.collections;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class RemoveDuplicatesFromArrayList
-{
-	public static void method1()
-	{
+public class RemoveDuplicatesFromArrayList {
+	public static void method1() {
 		final List<Integer> listWithDuplicates = new ArrayList<>();
 
 		listWithDuplicates.add(10);
@@ -21,15 +16,14 @@ public class RemoveDuplicatesFromArrayList
 		listWithDuplicates.add(50);
 		listWithDuplicates.add(10);
 
-		System.out.println("Before removing duplicates :: " + Arrays.toString(listWithDuplicates.toArray()));
+		System.out.println("Before removing duplicates :: " + listWithDuplicates.toString());
 
 		final List<Integer> listWithoutDuplicates = new ArrayList<>(new HashSet<>(listWithDuplicates));
 
-		System.out.println("After removing duplicates :: " + Arrays.toString(listWithoutDuplicates.toArray()));
+		System.out.println("After removing duplicates :: " + listWithoutDuplicates.toString());
 	}
 
-	public static void method2()
-	{
+	public static void method2() {
 		final List<Integer> listWithDuplicates = new ArrayList<>();
 
 		listWithDuplicates.add(10);
@@ -40,15 +34,15 @@ public class RemoveDuplicatesFromArrayList
 		listWithDuplicates.add(50);
 		listWithDuplicates.add(10);
 
-		System.out.println("Before removing duplicates :: " + Arrays.toString(listWithDuplicates.toArray()));
+		System.out.println("Before removing duplicates :: " + listWithDuplicates.toString());
 
 		final List<Integer> listWithoutDuplicates = listWithDuplicates.stream().distinct().toList();
 
-		System.out.println("After removing duplicates :: " + Arrays.toString(listWithoutDuplicates.toArray()));
+		System.out.println("After removing duplicates :: " + listWithoutDuplicates.toString());
 	}
 
-	public static void main(final String[] args)
-	{	  
+	public static void main(final String[] args) {
 		method1();
+		method2();
 	}
 }

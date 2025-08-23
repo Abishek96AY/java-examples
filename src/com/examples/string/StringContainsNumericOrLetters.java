@@ -1,14 +1,11 @@
 package com.examples.string;
 
-public class StringContainsNumericOrLetters
-{
-	public static boolean isEmpty(final CharSequence cs)
-	{
+public class StringContainsNumericOrLetters {
+	public static boolean isEmpty(final CharSequence cs) {
 		return cs == null || cs.length() == 0;
 	}
 
-	public static boolean isAlphanumeric(final CharSequence cs)
-	{
+	public static boolean isAlphanumeric(final CharSequence cs) {
 		if (isEmpty(cs)) {
 			return false;
 		}

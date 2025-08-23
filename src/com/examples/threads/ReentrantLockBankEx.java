@@ -58,7 +58,7 @@ class BankAccount {
 	}
 }
 
-public class ReentrantLockEx {
+public class ReentrantLockBankEx {
 	public static void main(String[] args) {
 		BankAccount account = new BankAccount();
 		ExecutorService executor = Executors.newFixedThreadPool(3); // 3 bank counters

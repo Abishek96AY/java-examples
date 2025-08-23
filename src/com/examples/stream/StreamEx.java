@@ -4,10 +4,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class StreamEx
-{
-	public static void main(String[] args)
-	{
+public class StreamEx {
+	public static void main(String[] args) {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 10, 9, 8, 7, 6);
 		list.forEach(System.out::println);
 		System.out.println("****************************************************************************");
@@ -21,7 +19,7 @@ public class StreamEx
 		System.out.println("****************************************************************************");
 
 		long count = list.stream().count();
-		System.out.println("Count :: "+count);
+		System.out.println("Count :: " + count);
 		System.out.println("****************************************************************************");
 
 		List<Integer> sortedList = list.stream().sorted().toList();
