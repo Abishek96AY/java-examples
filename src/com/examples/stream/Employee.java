@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,6 +20,15 @@ public class Employee {
 	private String deptName;
 	private String city;
 	private int yearOfJoining;
+	
+	public static List<Employee> employees = Arrays.asList(
+			new Employee(1, "Rahul", 24, 120000, "M", "Engineering", "Bangalore", 2000),
+			new Employee(2, "Vishal", 34, 110000, "M", "Engineering", "Mumbai", 1998),
+			new Employee(3, "Lakshmi", 28, 140000, "F", "HR", "Bangalore", 1992),
+			new Employee(4, "Priya", 24, 90000, "F", "Marketing", "Delhi", 2005),
+			new Employee(5, "Aditi", 30, 130000, "F", "HR", "Mumbai", 1995),
+			new Employee(6, "Jenni", 30, 100000, "F", "Engineering", "Mumbai", 1995)
+			);
 
 	public Employee(int id, String name, int age, long salary, String gender, String deptName, String city, int yearOfJoining) {
 		this.id = id;
@@ -101,15 +109,6 @@ public class Employee {
 		return Calendar.getInstance().get(Calendar.YEAR) - yearOfJoining;
 	}
 
-	public static List<Employee> employees = Arrays.asList(
-			new Employee(1, "Rahul", 24, 120000, "M", "Engineering", "Bangalore", 2000),
-			new Employee(2, "Vishal", 34, 110000, "M", "Engineering", "Mumbai", 1998),
-			new Employee(3, "Lakshmi", 28, 140000, "F", "HR", "Bangalore", 1992),
-			new Employee(4, "Priya", 24, 90000, "F", "Marketing", "Delhi", 2005),
-			new Employee(5, "Aditi", 30, 130000, "F", "HR", "Mumbai", 1995),
-			new Employee(6, "Jenni", 30, 100000, "F", "Engineering", "Mumbai", 1995)
-			);
-
 	public static void main(String[] args) {
 
 		/*** 1. MATCHING OPERATIONS ***/
@@ -147,7 +146,8 @@ public class Employee {
 				.orElse(0L);
 		
 		Employee maxEmployeeBySalary = Employee.employees.stream()
-				.max(Comparator.comparing(Employee::getSalary)).orElse(null);
+				.max(Comparator.comparing(Employee::getSalary))
+				.orElse(null);
 		
 		Optional<Employee> findEmployeeObjByName = employees.stream()
 			    .filter(e -> e.getName().equals("Abishek"))
@@ -185,14 +185,14 @@ public class Employee {
 				.map(Employee::getDeptName)
 				.distinct()
 				.toList();
+		
+		List<Integer> getAllAge = employees.stream()
+				.map(Employee::getAge)
+				.toList();
 
 		Set<String> departmentNamesSet = employees.stream()
 				.map(Employee::getDeptName)
 				.collect(Collectors.toSet());
-
-		List<Integer> getAllAge = employees.stream()
-				.map(Employee::getAge)
-				.toList();
 
 		/*** 5. SORTING ***/
 		List<Employee> sortEmployeesBySalary = employees.stream()
@@ -215,7 +215,7 @@ public class Employee {
 				.limit(3)
 				.toList();
 		
-		List<String> employeeNames = Employee.employees.stream()
+		List<String> sortByEmpSalAndGetEmployeeNames = Employee.employees.stream()
 			    .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
 			    .map(Employee::getName)
 			    .toList();
@@ -251,6 +251,21 @@ public class Employee {
 			    .findFirst()
 			    .map(e -> Map.of(e.getName(), e))
 				.orElse(Map.of());
+		
+		Map<String, Optional<Employee>> secondHighestSalaryEmployeeByDept =
+                employees.stream()
+                        .collect(Collectors.groupingBy(
+                                Employee::getDeptName,
+                                Collectors.collectingAndThen(
+                                        Collectors.toList(),
+                                        list -> list.stream()
+                                                .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+                                                .distinct()
+                                                .skip(1) // skip highest
+                                                .findFirst() // pick second highest
+                                )
+                        ));
+	   secondHighestSalaryEmployeeByDept.forEach((dept, emp) -> System.out.println(dept + " -> " + emp.map(Employee::getName).orElse("None")));
 
 		Map<String, List<Employee>> top2SalaryByDept = employees.stream()
 				.collect(Collectors.groupingBy(
@@ -269,7 +284,7 @@ public class Employee {
 				.collect(Collectors.toMap(Employee::getName, e -> e));
 
 		/*** 7. MAP CREATION ***/
-		Map<String, Double> getEmployeeMapBySalary = employees.stream()
+		Map<String, Double> getEmployeeMapBySalaryCondition = employees.stream()
 				.filter(e -> e.getSalary() > 100000 && e.getSalary() < 150000)
 				.collect(Collectors.toMap(Employee::getName, Employee::getSalary));
 
@@ -280,7 +295,7 @@ public class Employee {
 				.collect(Collectors.toMap(Employee::getName, e -> e));
 
 		/*** 8. SEARCHING / LOOKUPS ***/
-		Employee getEmployeeData = employees.stream()
+		Employee getEmployeeDataByName = employees.stream()
 				.filter(e -> e.getName().equals("Priya") && e.getDeptName().equals("Marketing"))
 				.findFirst().orElse(null);
 
@@ -296,7 +311,8 @@ public class Employee {
 			    .orElse(null);
 
 		Employee maxSalaryEmployee = employees.stream()
-				.max(Comparator.comparingDouble(Employee::getSalary)).orElse(null);
+				.max(Comparator.comparingDouble(Employee::getSalary))
+				.orElse(null);
 
 		/*** 9. EXTRA: Duplicates by name ***/
 		Map<String, Long> nameCount = employees.stream()
@@ -316,12 +332,223 @@ public class Employee {
 				.collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()))
 				.entrySet().stream()
 				.max(Map.Entry.comparingByValue())
-				.map(Map.Entry::getKey)
+				.map(e -> e.getKey())
 				.orElse("No Department");
-	}
-}
+		
+		/************************************************************************************************************/
+		
+		// Basic lists and sets
+		List<String> employeeNames = Employee.employees.stream().map(Employee::getName).toList();
 
-class Pratice {
-	public static void main(String[] args) {
+		Set<String> uniqueCityNames = Employee.employees.stream().map(Employee::getCity).collect(Collectors.toSet());
+
+		List<Employee> employeesOlderThan25 = Employee.employees.stream().filter(e -> e.getAge() > 25).toList();
+
+		List<Employee> employeesWithSalaryBelow100k = Employee.employees.stream().filter(e -> e.getSalary() < 100000).toList();
+
+		List<String> employeesInMumbai = Employee.employees.stream()
+		        .filter(e -> e.getCity().equals("Mumbai"))
+		        .map(Employee::getName)
+		        .toList();
+
+		List<Employee> employeesJoinedBefore2000 = Employee.employees.stream()
+		        .filter(e -> e.getYearOfJoining() < 2000)
+		        .toList();
+
+		List<Employee> employeesWithNameStartingWithA = Employee.employees.stream()
+		        .filter(e -> e.getName().startsWith("A"))
+		        .toList();
+
+		// Sorting
+		List<String> employeeNamesSortedAsc = Employee.employees.stream()
+		        .map(Employee::getName)
+		        .sorted()
+		        .toList();
+
+		List<String> employeeNamesSortedBySalaryAsc = Employee.employees.stream()
+		        .sorted(Comparator.comparingDouble(Employee::getSalary))
+		        .map(Employee::getName)
+		        .toList();
+
+		// Grouping & Counting
+		Map<String, Long> genderWiseEmployeeCount = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getGender, Collectors.counting()));
+
+		Map<String, Long> departmentWiseEmployeeCount = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()));
+
+		// Aggregations
+		Double averageEmployeeAge = Employee.employees.stream().mapToInt(Employee::getAge).average().orElse(0.0);
+
+		Double averageEmployeeSalary = Employee.employees.stream().mapToDouble(Employee::getSalary).average().orElse(0.0);
+
+		Double totalEmpSalary = Employee.employees.stream().mapToDouble(Employee::getSalary).sum();
+
+		Double maxEmpSalary = Employee.employees.stream().mapToDouble(Employee::getSalary).max().orElse(0.0);
+
+		Integer minEmployeeAge = Employee.employees.stream().mapToInt(Employee::getAge).min().orElse(0);
+
+		// Extremes
+		Optional<Employee> mostExperiencedEmployee = Employee.employees.stream()
+		        .max(Comparator.comparing(Employee::getExperience));
+
+		Optional<Employee> youngestEmployee = Employee.employees.stream()
+		        .min(Comparator.comparing(Employee::getAge));
+
+		Optional<Employee> oldestEmployee = Employee.employees.stream()
+		        .max(Comparator.comparing(Employee::getAge));
+
+		// Grouping
+		Map<String, List<Employee>> employeesByDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName));
+
+		Map<String, List<Employee>> employeesByCity = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getCity));
+
+		Map<String, Optional<Employee>> highestPaidEmployeePerDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(
+		                Employee::getDeptName,
+		                Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary))
+		        ));
+
+		Map<String, Double> averageSalaryPerDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName, Collectors.averagingDouble(Employee::getSalary)));
+
+		Map<String, Double> totalSalaryPerDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName, Collectors.summingDouble(Employee::getSalary)));
+
+		// Partitioning
+		Map<Boolean, List<Employee>> employeesPartitionedBySalaryAbove100k = Employee.employees.stream()
+		        .collect(Collectors.partitioningBy(e -> e.getSalary() > 100000));
+
+		Map<Boolean, List<Employee>> employeesPartitionedByAgeAbove30 = Employee.employees.stream()
+		        .collect(Collectors.partitioningBy(e -> e.getAge() > 30));
+
+		// Multi-level grouping
+		Map<String, Map<String, List<Employee>>> employeesByGenderThenDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getGender,
+		                Collectors.groupingBy(Employee::getDeptName)));
+
+		Map<String, List<String>> employeeNamesPerDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName,
+		                Collectors.mapping(Employee::getName, Collectors.toList())));
+
+		Map<String, Long> employeesJoinedAfter1995ByDepartment = Employee.employees.stream()
+		        .filter(e -> e.getYearOfJoining() > 1995)
+		        .collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()));
+
+		// N-th salaries
+		Optional<Employee> secondHighestSalaryEmployee = Employee.employees.stream()
+		        .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+		        .skip(1)
+		        .findFirst();
+
+		Optional<Employee> thirdHighestSalaryEmployee = Employee.employees.stream()
+		        .sorted(Comparator.comparing(Employee::getSalary).reversed())
+		        .skip(2)
+		        .findFirst();
+
+		// Sorting combos
+		Optional<Employee> secondYoungestEmployee = Employee.employees.stream()
+		        .map(Employee::getAge)
+		        .distinct()
+		        .sorted()
+		        .skip(1)
+		        .findFirst()
+		        .flatMap(age -> Employee.employees.stream().filter(e -> e.getAge() == age).findFirst());
+
+		List<Employee> employeesSortedByAgeThenSalary = Employee.employees.stream()
+		        .sorted(Comparator.comparingInt(Employee::getAge).thenComparing(Employee::getSalary))
+		        .toList();
+
+		List<Employee> employeesSortedByExperienceDesc = Employee.employees.stream()
+		        .sorted(Comparator.comparingInt(Employee::getYearOfJoining).reversed())
+		        .toList();
+
+		List<Employee> employeesSortedByCityThenName = Employee.employees.stream()
+		        .sorted(Comparator.comparing(Employee::getCity).thenComparing(Employee::getName))
+		        .toList();
+
+		// Gender-based filters
+		Optional<Employee> highestPaidFemaleEmployee = Employee.employees.stream()
+		        .filter(e -> e.getGender().equals("F"))
+		        .max(Comparator.comparingDouble(Employee::getSalary));
+
+		Optional<Employee> lowestPaidMaleEmployee = Employee.employees.stream()
+		        .filter(e -> e.getGender().equals("M"))
+		        .min(Comparator.comparingDouble(Employee::getSalary));
+
+		// Department-specific queries
+		List<Employee> top2OldestEmployeesInEngineering = Employee.employees.stream()
+		        .filter(e -> e.getDeptName().equals("Engineering"))
+		        .sorted(Comparator.comparingInt(Employee::getAge).reversed())
+		        .limit(2)
+		        .toList();
+
+		List<Employee> top2YoungestEmployeesInHR = Employee.employees.stream()
+		        .filter(e -> e.getDeptName().equals("HR"))
+		        .sorted(Comparator.comparingInt(Employee::getAge))
+		        .limit(2)
+		        .toList();
+
+		// Sets
+		Set<String> departmentNames = Employee.employees.stream()
+		        .map(Employee::getDeptName)
+		        .collect(Collectors.toSet());
+
+		// Gender Salary
+		Map<String, Double> averageSalaryByGender = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getGender, Collectors.averagingDouble(Employee::getSalary)));
+
+		// Department extremes
+		Map<String, Long> departmentWithMostEmployees = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()))
+		        .entrySet().stream()
+		        .max(Map.Entry.comparingByValue())
+		        .map(e -> Map.of(e.getKey(), e.getValue()))
+		        .orElse(Map.of());
+
+		Map<String, Double> departmentWithHighestAverageSalary = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName,
+		                Collectors.averagingDouble(Employee::getSalary)))
+		        .entrySet().stream()
+		        .max(Map.Entry.comparingByValue())
+		        .map(e -> Map.of(e.getKey(), e.getValue()))
+		        .orElse(Map.of());
+
+		Map<String, Double> maxSalaryPerDepartment = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getDeptName,
+		                Collectors.collectingAndThen(Collectors.toList(),
+		                        list -> list.stream().mapToDouble(Employee::getSalary).max().orElse(0.0))));
+
+		Map<String, Long> cityWiseEmployeeCount = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getCity, Collectors.counting()));
+
+		Double totalSalaryInMumbai = Employee.employees.stream()
+		        .filter(e -> e.getCity().equals("Mumbai"))
+		        .mapToDouble(Employee::getSalary)
+		        .sum();
+
+		// Age distribution
+		Integer mostCommonAge = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getAge, Collectors.counting()))
+		        .entrySet().stream()
+		        .max(Map.Entry.comparingByValue())
+		        .get()
+		        .getKey();
+
+		Map<Integer, List<String>> employeesGroupedByAgeWithNames = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getAge,
+		                Collectors.mapping(Employee::getName, Collectors.toList())));
+
+		List<Integer> mostCommonAges = Employee.employees.stream()
+		        .collect(Collectors.groupingBy(Employee::getAge, Collectors.counting()))
+		        .entrySet().stream()
+		        .collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.mapping(Map.Entry::getKey, Collectors.toList())))
+		        .entrySet().stream()
+		        .max(Map.Entry.comparingByKey())
+		        .map(Map.Entry::getValue)
+		        .orElse(List.of());
+		/************************************************************************************************************/
 	}
 }
