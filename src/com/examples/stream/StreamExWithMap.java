@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.examples.problems.stream.Employee;
+
 public class StreamExWithMap {
 	public static void main(String[] args) {
 		

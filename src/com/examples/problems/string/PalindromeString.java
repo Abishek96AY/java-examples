@@ -1,50 +1,38 @@
 package com.examples.problems.string;
 
+import java.util.stream.Stream;
+
 public class PalindromeString {
 	public static void main(String[] args) {
-
+		String input = "Mom";
+		withoutStream2(input);
 	}
 
-	public static boolean method2() {
-		String str = "radar";
-		String cleaned = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-		int left = 0;
-		int right = cleaned.length() - 1;
-
-		// Step 2: Two Pointers Approach
-		while (left < right) {
-			if (cleaned.charAt(left) != cleaned.charAt(right)) {
-				return false; // It's not a palindrome if there's a mismatch
-			}
-			left++;
-			right--;
+	public static void withoutStream1(String input) {
+		input = input.toLowerCase();
+		String reversed = ""; // identity
+		for (int i = 0; i < input.length(); i++) {
+			char c = input.charAt(i);
+			reversed = c + reversed; // accumulator logic (prepend character)
 		}
-		return true;
+		System.err.println("Palindrome :: " + input.equals(reversed));
 	}
 
-	public static boolean method3() {
-		String str = "radar";
-		String cleanString = str.toLowerCase();
-
-		// Step 2: Reverse the string
-		String reversed = new StringBuilder(cleanString).reverse().toString();
-
-		// Step 3: Compare the original string with the reversed string
-		return cleanString.equals(reversed);
+	public static void withoutStream2(String input) {
+		input = input.toLowerCase();
+		String reversed = new StringBuilder(input).reverse().toString();
+		System.out.println(input.equals(reversed));
 	}
 
-	public static void method1() {
-		String obj = "radar";
-		String temp = "";
-		char[] ob = obj.toCharArray();
-		for (int i = ob.length - 1; i >= 0; i--) {
-			temp = temp + ob[i];
-		}
-		if (obj.equals(temp)) {
-			System.out.println(obj + " It's a Palindrome !!!");
-		} else {
-			System.out.println(obj + " It's a not Palindrome !!!");
-		}
+	public static void withStream(String input) {
+		input = input.toLowerCase();
+		String reversed = input.chars().mapToObj(c -> String.valueOf((char) c)).reduce("", (a, b) -> b + a);
+		System.out.println("Palindrome (Stream): " + input.equals(reversed));
+	}
+
+	public static void withStreamBuilder(String input) {
+		input = input.toLowerCase();
+		String reversed = Stream.of(input).map(s -> new StringBuilder(s).reverse().toString()).findFirst().orElse("");
+		System.out.println("Palindrome (StreamBuilder): " + input.equals(reversed));
 	}
 }

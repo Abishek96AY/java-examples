@@ -1,34 +1,31 @@
 package com.examples.problems.string;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-public class DuplicateWordRemover {
+public class RemoveDuplicateWords {
 	public static void main(String[] args) {
 		String inputString = "Java is a programming language and Java is widely used in the software industry.";
-		// Removing duplicate words
-		String result = removeDuplicateWords(inputString);
-		System.out.println("String after removing duplicate words: " + result);
+		withOutStream(inputString);
+		withStream(inputString);
 	}
 
-	private static String removeDuplicateWords(String inputString) {
-		// Splitting the string into words
+	static void withOutStream(String inputString) {
 		String[] words = inputString.split("\\s+");
-
-		// Creating a set to store unique words
 		Set<String> uniqueWords = new HashSet<>();
-
-		// Removing duplicate words
 		StringBuilder resultBuilder = new StringBuilder();
 		for (String word : words) {
 			if (uniqueWords.add(word)) {
 				resultBuilder.append(word).append(" ");
 			}
 		}
+		System.out.println(resultBuilder.toString().trim());
+	}
 
-		// Converting the StringBuilder to a string
-		String result = resultBuilder.toString().trim();
-
-		return result;
+	static void withStream(String input) {
+		String output = Arrays.stream(input.split("\\s+")).map(s -> s).distinct().collect(Collectors.joining(" "));
+		System.out.println(output);
 	}
 }

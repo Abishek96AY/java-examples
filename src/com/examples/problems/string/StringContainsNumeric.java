@@ -1,28 +1,30 @@
 package com.examples.problems.string;
 
 public class StringContainsNumeric {
-	static boolean method1() {
-		String a = "123";
-		try {
-			Integer.parseInt(a);
-			return false;
-		} catch (Exception e) {
-			return true;
-		}
+	public static void main(String[] args) {
+		String input1 = "Hello123";
+		String input2 = "HelloWorld";
+
+		withOutStream(input1); // true
+		withOutStream(input2); // false
+
+		withStream(input1); // true
+		withStream(input2); // false
 	}
 
-	static boolean method2() {
-		CharSequence cs = "+123";
-		final int sz = cs.length();
-		for (int i = 0; i < sz; i++) {
-			if (!Character.isDigit(cs.charAt(i))) {
-				return false;
+	static void withOutStream(String input) {
+		boolean containsDigit = false;
+		for (char c : input.toCharArray()) {
+			if (Character.isDigit(c)) {
+				containsDigit = true;
+				break;
 			}
 		}
-		return true;
+		System.out.println("withOutStream(" + input + "): " + containsDigit);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(method1() ? "String contains !!!" : "All Integers !!");
+	static void withStream(String input) {
+		boolean containsDigit = input.chars().anyMatch(Character::isDigit);
+		System.out.println("withStream(" + input + "): " + containsDigit);
 	}
 }

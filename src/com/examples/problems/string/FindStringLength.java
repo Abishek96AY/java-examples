@@ -2,25 +2,27 @@ package com.examples.problems.string;
 
 public class FindStringLength {
 	public static void main(String[] args) {
-		// Example string
-		String exampleString = "Hello, world!";
-
-		// Find the length without using the length() method
-		int length = findLength(exampleString);
-
-		// Print the length
-		System.out.println("The length of the string is: " + length);
+		String input = "Hello, world!";
+		withoutStream1(input);
+		withoutStream2(input);
+		withStream(input);
 	}
 
-	// Method to find the length of a string without using length()
-	public static int findLength(String str) {
+	public static void withoutStream1(String input) {
 		int count = 0;
-
-		// Use a for-each loop to iterate over each character in the string
-		for(char c : str.toCharArray()) {
+		for (char c : input.toCharArray()) {
 			count++;
 		}
+		System.out.println("The length of the string is : " + count);
+	}
 
-		return count;
+	public static void withoutStream2(String input) {
+		System.out.println("The length of the string is : " + input.length());
+	}
+
+	public static void withStream(String input) {
+		Long count = input.chars().mapToObj(c -> (char) c).count();
+
+		System.out.println("The length of the string is : " + count);
 	}
 }

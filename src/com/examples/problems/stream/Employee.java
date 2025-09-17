@@ -1,4 +1,4 @@
-package com.examples.stream;
+package com.examples.problems.stream;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -387,6 +387,11 @@ public class Employee {
 		Double maxEmpSalary = Employee.employees.stream().mapToDouble(Employee::getSalary).max().orElse(0.0);
 
 		Integer minEmployeeAge = Employee.employees.stream().mapToInt(Employee::getAge).min().orElse(0);
+		
+		Double totalSalaryInMumbai = Employee.employees.stream()
+		        .filter(e -> e.getCity().equals("Mumbai"))
+		        .mapToDouble(Employee::getSalary)
+		        .sum();
 
 		// Extremes
 		Optional<Employee> mostExperiencedEmployee = Employee.employees.stream()
@@ -400,7 +405,7 @@ public class Employee {
 
 		// Grouping
 		Map<String, List<Employee>> employeesByDepartment = Employee.employees.stream()
-		        .collect(Collectors.groupingBy(Employee::getDeptName));
+		        .collect(Collectors.groupingBy(Employee::getDeptName, Collectors.toList()));
 
 		Map<String, List<Employee>> employeesByCity = Employee.employees.stream()
 		        .collect(Collectors.groupingBy(Employee::getCity));
@@ -466,7 +471,8 @@ public class Employee {
 		        .toList();
 
 		List<Employee> employeesSortedByCityThenName = Employee.employees.stream()
-		        .sorted(Comparator.comparing(Employee::getCity).thenComparing(Employee::getName))
+		        .sorted(Comparator.comparing(Employee::getCity)
+		        .thenComparing(Employee::getName))
 		        .toList();
 
 		// Gender-based filters
@@ -523,11 +529,6 @@ public class Employee {
 
 		Map<String, Long> cityWiseEmployeeCount = Employee.employees.stream()
 		        .collect(Collectors.groupingBy(Employee::getCity, Collectors.counting()));
-
-		Double totalSalaryInMumbai = Employee.employees.stream()
-		        .filter(e -> e.getCity().equals("Mumbai"))
-		        .mapToDouble(Employee::getSalary)
-		        .sum();
 
 		// Age distribution
 		Integer mostCommonAge = Employee.employees.stream()
