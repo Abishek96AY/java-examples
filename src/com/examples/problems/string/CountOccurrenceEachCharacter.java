@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 
 public class CountOccurrenceEachCharacter {
 	public static void main(String[] args) {
-		String input = "Java Guides Net Java is Powerful".replaceAll("[^a-zA-Z0-9]", "");
+		String input = "Java Guides Net Java is Powerful";
 		withoutStream(input);
 		withStream(input);
 	}
 
 	static void withoutStream(String input) {
 		Map<Character, Integer> map = new LinkedHashMap<>();
-		char[] charArr = input.toLowerCase().toCharArray();
+		char[] charArr = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase().toCharArray();
 
 		for (Character c : charArr) {
 			map.put(c, map.getOrDefault(c, 0) + 1);
@@ -29,7 +29,7 @@ public class CountOccurrenceEachCharacter {
 	}
 
 	static void withStream(String str) {
-		Map<Character, Long> map = str.toLowerCase().chars().mapToObj(c -> (char) c)
+		Map<Character, Long> map = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase().chars().mapToObj(c -> (char) c)
 				.collect(Collectors.groupingBy(e -> e, LinkedHashMap::new, Collectors.counting()));
 
 		map.forEach((a, b) -> {

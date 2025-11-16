@@ -23,8 +23,8 @@ public class CountOccurrencesOfSubstringInString {
 	}
 
 	static void withStream(String input, String substring) {
-		input = input.replaceAll("[^a-zA-Z0-9\\s]", ""); // clean punctuation
-		long count = Arrays.stream(input.split("\\s+")).filter(word -> word.equalsIgnoreCase(substring)).count();
+		String[] strArr = input.replaceAll("[^a-zA-Z0-9\\s]", "").split("\\s+");
+		long count = Arrays.stream(strArr).filter(word -> word.equalsIgnoreCase(substring)).count();
 
 		System.out.println("withStream() " + substring + " occurred " + count + " times...");
 	}

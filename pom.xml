@@ -10,7 +10,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>33.4.8-jre</version>
+			<version>33.5.0-jre</version>
 		</dependency>
 	</dependencies>
 
@@ -20,7 +20,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.14.0</version>
+				<version>3.14.1</version>
 				<configuration>
 					<release>21</release>
 				</configuration>

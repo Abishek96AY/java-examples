@@ -32,8 +32,7 @@ public class ReverseCharactersOfEachWord {
 
 	static void withStream2(String input) {
 		String result = Arrays.stream(input.split("\\s+"))
-				.map(word -> word.chars().mapToObj(c -> String.valueOf((char) c))
-				.reduce("", (rev, ch) -> ch + rev))
+				.map(word -> word.chars().mapToObj(c -> String.valueOf((char) c)).reduce("", (rev, ch) -> ch + rev))
 				.collect(Collectors.joining(" "));
 
 		System.out.println(result);

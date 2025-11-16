@@ -1,15 +1,13 @@
 package com.examples.datastructure.sorting;
 
-public class SelectionSort
-{
+public class SelectionSort {
 	/**
-	 * Selection Sort
-	 * • Concept: Repeatedly finds the minimum element from the unsorted part and puts it at the beginning.
-	 * • Time Complexity: O(n^2)
+	 * Selection Sort • Concept: Repeatedly finds the minimum element from the
+	 * unsorted part and puts it at the beginning. • Time Complexity: O(n^2)
 	 */
 
 	public static void main(String[] args) {
-		int[] arr = {29, 10, 14, 37, 13, 1, 4};
+		int[] arr = { 29, 10, 14, 37, 13, 1, 4 };
 
 		// Perform Selection Sort
 		selectionSort(arr);
@@ -32,9 +30,9 @@ public class SelectionSort
 
 			// Find the smallest element in the unsorted part
 			for (int j = i + 1; j < n; j++) {
-				System.out.println("arr[j] :: "+arr[j]+", arr[minIndex] :: "+arr[minIndex]);
+				System.out.println("arr[j] :: " + arr[j] + ", arr[minIndex] :: " + arr[minIndex]);
 				if (arr[j] < arr[minIndex]) {
-					minIndex = j;  // Update minIndex if a smaller element is found
+					minIndex = j; // Update minIndex if a smaller element is found
 				}
 			}
 

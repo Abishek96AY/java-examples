@@ -32,12 +32,7 @@ public class FirstNonRepeatedCharacter {
 	static void withStream(String input) {
 		Character output = input.chars().mapToObj(c -> (char) c)
 				.collect(Collectors.groupingBy(e -> e, LinkedHashMap::new, Collectors.counting()))
-				.entrySet()
-				.stream()
-				.filter(e -> e.getValue() == 1)
-				.map(Map.Entry::getKey)
-				.findFirst()
-				.orElse(null);
+				.entrySet().stream().filter(e -> e.getValue() == 1).map(Map.Entry::getKey).findFirst().orElse(null);
 
 		System.out.println(output);
 	}

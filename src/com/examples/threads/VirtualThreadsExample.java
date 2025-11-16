@@ -11,6 +11,7 @@ public class VirtualThreadsExample {
 				final int taskId = i;
 				executor.submit(() -> {
 					System.out.println("Task " + taskId + " running on " + Thread.currentThread());
+					//System.out.println("Is virtual? " + Thread.currentThread().isVirtual());
 					try {
 						Thread.sleep(1000); // simulate blocking work
 					} catch (InterruptedException e) {

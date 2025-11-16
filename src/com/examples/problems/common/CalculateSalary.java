@@ -1,18 +1,12 @@
 package com.examples.problems.common;
 
-import java.util.Scanner;
-
-public class CalculateSalary
-{
-	public static void main(String[] args)
-	{
-		Scanner scanner = new Scanner(System.in);
-
+public class CalculateSalary {
+	public static void main(String[] args) {
 		System.out.println("Enter Basic Salary of the Employee:");
-		double basic = scanner.nextDouble();
+		double basic = 10300.00;
 
-		double hra = 0.10 * basic;  // 10% of basic
-		double da = 0.08 * basic;   // 8% of basic
+		double hra = 0.10 * basic; // 10% of basic
+		double da = 0.08 * basic; // 8% of basic
 		double grossSalary = basic + hra + da;
 
 		double tax = 0.05 * grossSalary; // 5% tax on gross salary
