@@ -1,9 +1,7 @@
-package com.examples.problems.common;
+package com.examples.problems.numbers;
 
-public class PrimeNumberWithinRange
-{
-	public static void main(String[] args)
-	{
+public class PrimeNumberWithinRange {
+	public static void main(String[] args) {
 		int start = 10; // Start of the range
 		int end = 50; // End of the range
 		System.out.println("Prime numbers between " + start + " and " + end + ":");

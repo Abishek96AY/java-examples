@@ -23,20 +23,19 @@ public class SecondHighestNumberInArray {
 			}
 		}
 
-		System.out.println("Second highest: " + second);
+		System.out.println("Without Stream Second highest: " + second);
 	}
 
 	static void method2() {
 		int[] arr = { 10, 5, 20, 8, 20, 15 };
 
-		int second = Arrays.stream(arr)
-				.distinct() // remove duplicates
+		int second = Arrays.stream(arr).distinct() // remove duplicates
 				.boxed() // convert int -> Integer
 				.sorted(Comparator.reverseOrder()) // sort desc
 				.skip(1) // skip highest
 				.findFirst() // take second
 				.orElse(Integer.MIN_VALUE);
 
-		System.out.println("Second highest: " + second);
+		System.out.println("With Stream Second highest: " + second);
 	}
 }

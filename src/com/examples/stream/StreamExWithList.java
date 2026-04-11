@@ -8,22 +8,18 @@ public class StreamExWithList {
 	public static void main(String[] args) {
 
 		// Example: List of lists -> flatten into single list
-		List<List<String>> nestedList = Arrays.asList(
-				Arrays.asList("A", "B"), 
-				Arrays.asList("C", "D"),
-				Arrays.asList("E", "F"));
+		List<List<String>> nestedList = Arrays.asList(Arrays.asList("A", "B"), Arrays.asList("C", "D"), Arrays.asList("E", "F"));
 		List<String> flatList = nestedList.stream().flatMap(List::stream).toList();
 		System.out.println("Flat list: " + flatList); // [A, B, C, D, E, F]
 		System.out.println("****************************************************************************");
-		
+
 		List<String> stringList = List.of("John", "Alice", "Bob");
-		
+
 		List<String> upperCase = stringList.stream()
-		        .map(String::toUpperCase) // convert to UPPERCASE
-		        .sorted()                 // sort alphabetically
-		        .toList();
-		
-		
+				.map(String::toUpperCase) // convert to UPPERCASE
+				.sorted() // sort alphabetically
+				.toList();
+
 		List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 10, 9, 8, 7, 6);
 		
 		int sum = integerList.stream().mapToInt(Integer::intValue).sum();
@@ -35,7 +31,6 @@ public class StreamExWithList {
 		        .findFirst()
 		        .orElseThrow();
 
-		
 		int sumUsingReduce = integerList.stream().reduce(0, (a, b) -> a + b);
 		System.out.println(sumUsingReduce);
 		System.out.println("****************************************************************************");
@@ -68,10 +63,7 @@ public class StreamExWithList {
 		System.out.println("****************************************************************************");
 
 		List<String> listEx = Arrays.asList("100", "ABC", "1AB", "101");
-		List<Integer> numericOnly = listEx.stream()
-				.filter(s -> s.matches("\\d+"))
-				.map(Integer::parseInt)
-				.toList();
+		List<Integer> numericOnly = listEx.stream().filter(s -> s.matches("\\d+")).map(Integer::parseInt).toList();
 		System.out.println(numericOnly);
 		System.out.println("****************************************************************************");
 
@@ -79,14 +71,16 @@ public class StreamExWithList {
 		String result = strList.stream().reduce("", (a, b) -> a + b);
 		System.out.println(result);
 		System.out.println("****************************************************************************");
-		
+
 		List<String> names = List.of("Alice", "Bob", "Charlie");
 
 		List<String> listNames = names.stream()
-		    .peek(n -> System.out.println("Before filter: " + n))
-		    .filter(n -> n.startsWith("A"))
-		    .peek(n -> System.out.println("After filter: " + n))
-		    .map(String::toUpperCase)
-		    .toList();
+				.peek(n -> System.out.println("Before filter: " + n))
+				.filter(n -> n.startsWith("A"))
+				.peek(n -> System.out.println("After filter: " + n))
+				.map(String::toUpperCase).toList();
+
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+		numbers.parallelStream().filter(n -> n % 2 == 0).forEach(System.out::println);
 	}
 }

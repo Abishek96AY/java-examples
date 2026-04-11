@@ -1,4 +1,4 @@
-package com.examples.problems.common;
+package com.examples.problems.numbers;
 
 public class Armstrong {
 	public static void main(String[] args) {

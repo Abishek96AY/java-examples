@@ -2,7 +2,6 @@ package com.examples.problems.string;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class MaximumOccurringCharacter {
@@ -35,7 +34,7 @@ public class MaximumOccurringCharacter {
 				.collect(Collectors.groupingBy(c -> c, Collectors.counting()))
 				.entrySet()
 				.stream()
-				.max(Entry.comparingByValue())
+				.max(Map.Entry.comparingByValue())
 				.get()
 				.getKey();
 	}
