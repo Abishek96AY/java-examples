@@ -1,8 +1,7 @@
 package com.examples.interfaces;
 
 @FunctionalInterface
-public interface FunctionalInterfaceEx1
-{
+public interface FunctionalInterfaceEx1 {
 	void run(String a);
 
 	// default method

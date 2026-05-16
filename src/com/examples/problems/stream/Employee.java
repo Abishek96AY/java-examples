@@ -137,6 +137,9 @@ public class Employee {
 		Map<String, Double> avgSalaryByDept = employees.stream()
 				.collect(Collectors.groupingBy(Employee::getDeptName, Collectors.averagingDouble(Employee::getSalary)));
 		
+		Map<String, Map<String, Double>> avgSalaryByGenderAndDept = Employee.employees.stream().
+				collect(Collectors.groupingBy(Employee::getGender, Collectors.groupingBy(Employee::getDeptName, Collectors.averagingDouble(Employee::getSalary))));
+		
 		Map<String, List<Employee>> employeesByAgeGroupCustom = employees.stream()
 			    .collect(Collectors.groupingBy(e -> {
 			        if (e.getAge() <= 25) return "Young";
@@ -144,9 +147,6 @@ public class Employee {
 			        else return "Senior";
 			    }));
 		
-		Map<String, Map<String, Double>> avgSalaryByGenderAndDept = Employee.employees.stream().
-				collect(Collectors.groupingBy(Employee::getGender, Collectors.groupingBy(Employee::getDeptName, Collectors.averagingDouble(Employee::getSalary))));
-
 		Map<String, Long> countDepartment = employees.stream()
 				.collect(Collectors.groupingBy(Employee::getDeptName, Collectors.counting()));
 
@@ -240,14 +240,14 @@ public class Employee {
                         ));
 	   secondHighestSalaryEmployeeByDept.forEach((dept, emp) -> System.out.println(dept + " -> " + emp.map(Employee::getName).orElse("None")));
 
-		Map<String, List<Employee>> top2SalaryByDept = employees.stream()
+		Map<String, List<Employee>> top3SalaryByDept = employees.stream()
 				.collect(Collectors.groupingBy(
 						Employee::getDeptName,
 						Collectors.collectingAndThen(
 								Collectors.toList(),
 								list -> list.stream()
 								.sorted(Comparator.comparing(Employee::getSalary).reversed())
-								.limit(2)
+								.limit(3)
 								.toList()
 								)
 						));
