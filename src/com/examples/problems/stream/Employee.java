@@ -177,8 +177,7 @@ public class Employee {
 				.toList();
 
 		List<Employee> sortedByDeptThenSalary = employees.stream()
-				.sorted(Comparator.comparing(Employee::getDeptName)
-				.thenComparing(Employee::getSalary))
+				.sorted(Comparator.comparing(Employee::getDeptName).thenComparing(Employee::getSalary))
 				.toList();
 
 		/*** 6. TOP-N / CUSTOM FILTERS ***/
@@ -459,8 +458,7 @@ public class Employee {
 		        .flatMap(age -> Employee.employees.stream().filter(e -> e.getAge() == age).findFirst());
 
 		List<Employee> employeesSortedByAgeThenSalary = Employee.employees.stream()
-		        .sorted(Comparator.comparingInt(Employee::getAge)
-		        .thenComparing(Employee::getSalary))
+		        .sorted(Comparator.comparingInt(Employee::getAge).thenComparing(Employee::getSalary))
 		        .toList();
 
 		List<Employee> employeesSortedByExperienceDesc = Employee.employees.stream()
@@ -529,6 +527,10 @@ public class Employee {
 		Map<Integer, List<String>> employeesGroupedByAgeWithNames = Employee.employees.stream()
 		        .collect(Collectors.groupingBy(Employee::getAge,
 		                Collectors.mapping(Employee::getName, Collectors.toList())));
+		
+		List<Employee> sortedList = Employee.employees.stream()
+				.sorted(Comparator.comparing(Employee::getName).thenComparing(Comparator.comparing(Employee::getDeptName).reversed()))
+				.toList();
 		/************************************************************************************************************/
 	}
 }
